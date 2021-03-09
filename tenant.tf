@@ -15,7 +15,7 @@ resource "aci_bridge_domain" "dev_bd" {
 
 
 resource "aci_subnet" "dev_subnet" {
-  bridge_domain_dn 	= aci_bridge_domain.dev_bd.id
+  parent_dn 	= aci_bridge_domain.dev_bd.id
   ip 			= "10.10.0.1/16"
 }
 
