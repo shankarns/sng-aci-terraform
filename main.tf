@@ -1,11 +1,15 @@
 
-
 terraform {
   required_providers {
     vsphere = {
       source = "hashicorp/vsphere"
       version = "1.24.3"
     }
+    aci = {
+      source = "terraform-providers/aci"
+      required_version = ">= 0.13"
+    }
+  
   }
 }
 
