@@ -51,7 +51,7 @@ resource "aci_filter_entry" "tomcat" {
   filter_dn = aci_filter.allow_tomcat2.id
   name      = "tomcat"
   d_from_port = "8080"
-  d_to_port   = "8080"
+  d_to_port   = "8081"
   prot        = "tcp"
   ether_t     = "ip"
 }
