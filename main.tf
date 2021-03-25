@@ -1,16 +1,22 @@
-variable aci_username {
-  default = ""
+
+
+terraform {
+  required_providers {
+    vsphere = {
+      source = "hashicorp/vsphere"
+      version = "1.24.3"
+    }
+  }
 }
 
-variable aci_password {
-  default = ""
+provider "vsphere" {
+  user           = var.vsphere_user
+  password       = var.vsphere_password
+  vsphere_server = var.vsphere_server
+
+  # if you have a self-signed cert
+  allow_unverified_ssl = true
 }
-
-variable aci_url {
-  default = ""
-}
-
-
 provider "aci" {
     # cisco-aci user name
     username = var.aci_username
