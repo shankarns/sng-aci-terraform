@@ -1,3 +1,15 @@
+variable aci_username {
+  default = ""
+}
+
+variable aci_password {
+  default = ""
+}
+
+variable aci_url {
+  default = ""
+}
+
 variable "vsphere_user" {
   type = string
   description = "the username for vsphere"
