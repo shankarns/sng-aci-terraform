@@ -7,7 +7,7 @@ terraform {
     }
     aci = {
       source = "terraform-providers/aci"
-      required_version = ">= 0.13"
+      version = ">= 0.13"
     }
   
   }
