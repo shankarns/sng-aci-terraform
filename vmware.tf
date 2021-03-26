@@ -14,7 +14,7 @@ data "vsphere_resource_pool" "pool" {
 }
 
 data "vsphere_network" "network" {
-  name          = "${aci_tenant.tenant.name}|${aci_application_profile.name}|${aci_application_epg.name}"
+  name          = "${aci_tenant.tenant.name}|${aci_application_profile.test_app.name}|${aci_application_epg.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -25,7 +25,7 @@ data "vsphere_virtual_machine" "template" {
 
 
 resource "vsphere_virtual_machine" "vm" {
-  name             = "${var.vsphere_vm_name}_${count.index}"
+  name             = var.vsphere_vm_name
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
 
