@@ -39,7 +39,7 @@ data "vsphere_virtual_machine" "template" {
 
 
 resource "vsphere_virtual_machine" "vm_web" {
-  name             = terraform_web
+  name             = "terraform_web"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
 
@@ -67,7 +67,7 @@ resource "vsphere_virtual_machine" "vm_web" {
 }
 
 resource "vsphere_virtual_machine" "vm_app" {
-  name             = terraform_app
+  name             = "terraform_app"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
 
@@ -95,7 +95,7 @@ resource "vsphere_virtual_machine" "vm_app" {
 }
 
 resource "vsphere_virtual_machine" "vm_db" {
-  name             = terraform_db
+  name             = "terraform_db"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
 
