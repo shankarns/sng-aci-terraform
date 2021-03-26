@@ -24,7 +24,7 @@ data "vsphere_network" "network_web" {
 */
 
 data "vsphere_network" "network_web" {
-  name          = var.vhsphere_vm_portgroup
+  name          = var.vsphere_vm_portgroup
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
