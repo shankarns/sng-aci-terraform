@@ -16,9 +16,15 @@ data "vsphere_resource_pool" "pool" {
 
 
 //we concatenate the tenant, app profile and epg to get the portgroup name
-
+/*
 data "vsphere_network" "network_web" {
   name          = "${aci_tenant.test-tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+*/
+
+data "vsphere_network" "network_web" {
+  name          = var.vhsphere_vm_portgroup
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -48,6 +54,7 @@ resource "vsphere_virtual_machine" "vm_web" {
   memory   = var.vsphere_vm_memory #1024
   guest_id = var.vsphere_vm_guest #"other3xLinux64Guest"
   wait_for_guest_ip_timeout = -1
+
   network_interface {
     network_id = data.vsphere_network.network_web.id
   }
