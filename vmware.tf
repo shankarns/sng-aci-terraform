@@ -42,7 +42,7 @@ resource "vsphere_virtual_machine" "vm_web" {
   name             = "terraform_web"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
-  depend_on = [aci_application_epg.WEB_EPG]
+  depends_on = [aci_application_epg.WEB_EPG]
 
   num_cpus = var.vsphere_vm_cpu #2
   memory   = var.vsphere_vm_memory #1024
