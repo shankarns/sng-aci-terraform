@@ -13,8 +13,11 @@ data "vsphere_resource_pool" "pool" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+
+
+
 data "vsphere_network" "network" {
-  name          = "${aci_tenant.tenant.name}|${aci_application_profile.test_app.name}|${aci_application_epg.name}"
+  name          = "${aci_tenant.test-tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
