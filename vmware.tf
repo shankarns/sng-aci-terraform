@@ -66,6 +66,7 @@ resource "vsphere_virtual_machine" "vm_web" {
 
 }
 
+/*
 resource "vsphere_virtual_machine" "vm_app" {
   name             = "terraform_app"
   resource_pool_id = data.vsphere_resource_pool.pool.id
@@ -124,7 +125,7 @@ resource "vsphere_virtual_machine" "vm_db" {
 
 }
 
-
+*/
 
 /*
 #No more VM module because they want to customize, and I don't want that
