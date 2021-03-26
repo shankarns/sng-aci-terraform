@@ -46,7 +46,7 @@ resource "vsphere_virtual_machine" "vm_web" {
   num_cpus = var.vsphere_vm_cpu #2
   memory   = var.vsphere_vm_memory #1024
   guest_id = var.vsphere_vm_guest #"other3xLinux64Guest"
-
+  wait_for_guest_ip_timeout = -1
   network_interface {
     network_id = data.vsphere_network.network_web.id
   }
@@ -74,6 +74,7 @@ resource "vsphere_virtual_machine" "vm_app" {
   num_cpus = var.vsphere_vm_cpu #2
   memory   = var.vsphere_vm_memory #1024
   guest_id = var.vsphere_vm_guest #"other3xLinux64Guest"
+  wait_for_guest_ip_timeout = -1
 
   network_interface {
     network_id = data.vsphere_network.network_app.id
@@ -102,6 +103,7 @@ resource "vsphere_virtual_machine" "vm_db" {
   num_cpus = var.vsphere_vm_cpu #2
   memory   = var.vsphere_vm_memory #1024
   guest_id = var.vsphere_vm_guest #"other3xLinux64Guest"
+  wait_for_guest_ip_timeout = -1
 
   network_interface {
     network_id = data.vsphere_network.network_db.id
