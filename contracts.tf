@@ -1,30 +1,30 @@
 resource "aci_contract" "app_to_web" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "app_to_web"
 }
 
 resource "aci_contract" "db_to_app" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "db_to_app"
 }
 
 resource "aci_contract" "web_to_internet" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "web_to_internet"
 }
 
 resource "aci_filter" "allow_http" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "allow_http"
 }
 
 resource "aci_filter" "allow_tomcat2" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "allow_tomcat2"
 }
 
 resource "aci_filter" "allow_mysql" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "allow_mysql"
 }
 

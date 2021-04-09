@@ -1,15 +1,15 @@
-resource "aci_tenant" "test-tenant" {
-  name        = "test-tenant"
+resource "aci_tenant" "tenant" {
+  name        = "aci_tenant_name"
   description = "This tenant is created by terraform"
 }
 
 resource "aci_vrf" "test-vrf" {
-  tenant_dn	= aci_tenant.test-tenant.id
+  tenant_dn	= aci_tenant.tenant.id
   name 		= "test-vrf"
 }
 
 resource "aci_bridge_domain" "dev_bd" {
-  tenant_dn	= aci_tenant.test-tenant.id
+  tenant_dn	= aci_tenant.tenant.id
   name		= "dev_bd"
 }
 
@@ -20,7 +20,7 @@ resource "aci_subnet" "dev_subnet" {
 }
 
 resource "aci_l3_outside" "internet" {
-  tenant_dn = aci_tenant.test-tenant.id
+  tenant_dn = aci_tenant.tenant.id
   name      = "internet"
 }
 

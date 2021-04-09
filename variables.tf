@@ -1,3 +1,8 @@
+variable "aci_tenant_name" {
+  description = "describe your variable"
+  default = ""
+}
+
 variable aci_username {
   default = ""
 }
