@@ -71,7 +71,7 @@ resource "vsphere_virtual_machine" "vm_web" {
 
     }
 
-    ipv4_gateway "10.0.1.1"
+    ipv4_gateway = "10.0.1.1"
   }  
 
   disk {
