@@ -22,13 +22,6 @@ data "vsphere_network" "network_web" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-/*
-data "vsphere_network" "network_web" {
-  name          = var.vsphere_vm_portgroup
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
-*/
-
 data "vsphere_network" "network_app" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.APP_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
@@ -88,11 +81,11 @@ resource "vsphere_virtual_machine" "vm_web" {
   }
 }
 
-/*
 resource "vsphere_virtual_machine" "vm_app" {
   name             = "terraform_app"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
+  depends_on = [aci_application_epg.APP_EPG]
 
   num_cpus = var.vsphere_vm_cpu #2
   memory   = var.vsphere_vm_memory #1024
@@ -103,6 +96,7 @@ resource "vsphere_virtual_machine" "vm_app" {
     network_id = data.vsphere_network.network_app.id
   }
 
+    
   disk {
     label = "disk0"
     size  = var.vsphere_vm_disksize #20
@@ -113,15 +107,28 @@ resource "vsphere_virtual_machine" "vm_app" {
     linked_clone  = var.linked_clone
     timeout       = var.timeout
 
+    customize {
+      linux_options {
+        host_name = "app1"
+        domain = "cisco.com"
+      }
+
+    network_interface {
+      ipv4_address = "10.0.2.10"  
+      ipv4_netmask = 24
+
+    }
+
+      ipv4_gateway = "10.0.2.1"
+    }
   }
-
-
 }
 
 resource "vsphere_virtual_machine" "vm_db" {
   name             = "terraform_db"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
+  depends_on = [aci_application_epg.DB_EPG]
 
   num_cpus = var.vsphere_vm_cpu #2
   memory   = var.vsphere_vm_memory #1024
@@ -132,6 +139,7 @@ resource "vsphere_virtual_machine" "vm_db" {
     network_id = data.vsphere_network.network_db.id
   }
 
+    
   disk {
     label = "disk0"
     size  = var.vsphere_vm_disksize #20
@@ -142,26 +150,21 @@ resource "vsphere_virtual_machine" "vm_db" {
     linked_clone  = var.linked_clone
     timeout       = var.timeout
 
+    customize {
+      linux_options {
+        host_name = "db1"
+        domain = "cisco.com"
+      }
+
+    network_interface {
+      ipv4_address = "10.0.3.10"  
+      ipv4_netmask = 24
+
+    }
+
+      ipv4_gateway = "10.0.3.1"
+    }
   }
-
-
 }
 
-*/
 
-/*
-#No more VM module because they want to customize, and I don't want that
-module "vm" {
-  source  = "Terraform-VMWare-Modules/vm/vsphere"
-  version = "2.1.0"
-  vmtemp        = var.vsphere_vm_template
-  instances     = 1
-  vmname        = var.vsphere_vm_name
-  vmrp          = var.vsphere_resource_pool
-  network = {
-    "${var.vsphere_vm_portgroup}"  = ["", ""] # To use DHCP create Empty list ["",""]
-  }
-  dc        = var.vsphere_datacenter
-  datastore = var.vsphere_datastore
-}
-*/
