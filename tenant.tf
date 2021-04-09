@@ -41,7 +41,7 @@ resource "aci_bridge_domain" "db_bd" {
 
 
 resource "aci_subnet" "db_subnet" {
-  parent_dn   = aci_bridge_domain.app_bd.id
+  parent_dn   = aci_bridge_domain.db_bd.id
   ip      = "10.10.3.1/16"
 }
 
