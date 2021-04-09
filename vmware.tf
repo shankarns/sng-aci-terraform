@@ -40,7 +40,8 @@ data "vsphere_virtual_machine" "template" {
 // VM CREATION WITH STATIC IPs
 
 resource "vsphere_virtual_machine" "vm_web" {
-  name             = "${var.aci_tenant_name}_terraform_web"
+  count = var.web_tier_count
+  name             = "${var.aci_tenant_name}_terraform_web_${count.index}"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.WEB_EPG]
@@ -67,12 +68,12 @@ resource "vsphere_virtual_machine" "vm_web" {
 
     customize {
       linux_options {
-        host_name = "web1"
+        host_name = "web${count.index}"
         domain = "cisco.com"
       }
 
     network_interface {
-      ipv4_address = "10.0.1.10"  
+      ipv4_address = "10.0.1.1${count.index}"  
       ipv4_netmask = 24
 
     }
@@ -83,7 +84,8 @@ resource "vsphere_virtual_machine" "vm_web" {
 }
 
 resource "vsphere_virtual_machine" "vm_app" {
-  name             = "${var.aci_tenant_name}_terraform_app"
+  count = var.app_tier_count
+  name             = "${var.aci_tenant_name}_terraform_app_${count.index}"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.APP_EPG]
@@ -110,12 +112,12 @@ resource "vsphere_virtual_machine" "vm_app" {
 
     customize {
       linux_options {
-        host_name = "app1"
+        host_name = "app${count.index}"
         domain = "cisco.com"
       }
 
     network_interface {
-      ipv4_address = "10.0.2.10"  
+      ipv4_address = "10.0.2.1${count.index}"  
       ipv4_netmask = 24
 
     }
@@ -126,7 +128,8 @@ resource "vsphere_virtual_machine" "vm_app" {
 }
 
 resource "vsphere_virtual_machine" "vm_db" {
-  name             = "${var.aci_tenant_name}_terraform_db"
+  count = var.db_tier_count
+  name             = "${var.aci_tenant_name}_terraform_db_${count.index}"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.DB_EPG]
@@ -153,12 +156,12 @@ resource "vsphere_virtual_machine" "vm_db" {
 
     customize {
       linux_options {
-        host_name = "db1"
+        host_name = "db${count.index}"
         domain = "cisco.com"
       }
 
     network_interface {
-      ipv4_address = "10.0.3.10"  
+      ipv4_address = "10.0.3.1${count.index}"  
       ipv4_netmask = 24
 
     }
