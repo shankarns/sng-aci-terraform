@@ -56,24 +56,11 @@ resource "vsphere_virtual_machine" "vm_web" {
   guest_id = var.vsphere_vm_guest #"other3xLinux64Guest"
   wait_for_guest_ip_timeout = -1
 
-  customize {
+  network_interface {
+    network_id = data.vsphere_network.network_web.id
+  }
 
-
-    linux_options {
-      host_name = "web1"
-      domain = "cisco.com"
-    }
-
-    network_interface {
-      network_id = data.vsphere_network.network_web.id
-      ipv4_address = "10.0.1.10"  
-      ipv4_netmask = 24
-
-    }
-
-    ipv4_gateway = "10.0.1.1"
-  }  
-
+    
   disk {
     label = "disk0"
     size  = var.vsphere_vm_disksize #20
@@ -84,9 +71,21 @@ resource "vsphere_virtual_machine" "vm_web" {
     linked_clone  = var.linked_clone
     timeout       = var.timeout
 
+    customize {
+      linux_options {
+        host_name = "web1"
+        domain = "cisco.com"
+      }
+
+    network_interface {
+      ipv4_address = "10.0.1.10"  
+      ipv4_netmask = 24
+
+    }
+
+      ipv4_gateway = "10.0.1.1"
+    }
   }
-
-
 }
 
 /*
