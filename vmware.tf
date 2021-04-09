@@ -16,17 +16,18 @@ data "vsphere_resource_pool" "pool" {
 
 
 //we concatenate the tenant, app profile and epg to get the portgroup name
-/*
+
 data "vsphere_network" "network_web" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
-*/
 
+/*
 data "vsphere_network" "network_web" {
   name          = var.vsphere_vm_portgroup
   datacenter_id = data.vsphere_datacenter.dc.id
 }
+*/
 
 data "vsphere_network" "network_app" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.APP_EPG.name}"
@@ -55,9 +56,23 @@ resource "vsphere_virtual_machine" "vm_web" {
   guest_id = var.vsphere_vm_guest #"other3xLinux64Guest"
   wait_for_guest_ip_timeout = -1
 
-  network_interface {
-    network_id = data.vsphere_network.network_web.id
-  }
+  customize {
+
+
+    linux_options {
+      host_name = "web1"
+      domain = "cisco.com"
+    }
+
+    network_interface {
+      network_id = data.vsphere_network.network_web.id
+      ipv4_address = "10.0.1.10"  
+      ipv4_netmask = 24
+
+    }
+
+    ipv4_gateway "10.0.1.1"
+  }  
 
   disk {
     label = "disk0"
