@@ -18,7 +18,7 @@ data "vsphere_resource_pool" "pool" {
 //we concatenate the tenant, app profile and epg to get the portgroup name
 /*
 data "vsphere_network" "network_web" {
-  name          = "${aci_tenant.test-tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
+  name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 */
@@ -29,12 +29,12 @@ data "vsphere_network" "network_web" {
 }
 
 data "vsphere_network" "network_app" {
-  name          = "${aci_tenant.test-tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.APP_EPG.name}"
+  name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.APP_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 data "vsphere_network" "network_db" {
-  name          = "${aci_tenant.test-tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.DB_EPG.name}"
+  name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.DB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
