@@ -11,6 +11,7 @@ resource "aci_vrf" "test-vrf" {
 resource "aci_bridge_domain" "dev_bd" {
   tenant_dn	= aci_tenant.tenant.id
   name		= "dev_bd"
+  relation_fv_rs_ctx = aci_vrf.test-vrf.id
 }
 
 
