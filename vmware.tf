@@ -37,9 +37,10 @@ data "vsphere_virtual_machine" "template" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+// VM CREATION WITH STATIC IPs
 
 resource "vsphere_virtual_machine" "vm_web" {
-  name             = "terraform_web"
+  name             = "${var.aci_tenant_name}_terraform_web"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.WEB_EPG]
@@ -82,7 +83,7 @@ resource "vsphere_virtual_machine" "vm_web" {
 }
 
 resource "vsphere_virtual_machine" "vm_app" {
-  name             = "terraform_app"
+  name             = "${var.aci_tenant_name}_terraform_app"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.APP_EPG]
@@ -125,7 +126,7 @@ resource "vsphere_virtual_machine" "vm_app" {
 }
 
 resource "vsphere_virtual_machine" "vm_db" {
-  name             = "terraform_db"
+  name             = "${var.aci_tenant_name}_terraform_db"
   resource_pool_id = data.vsphere_resource_pool.pool.id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.DB_EPG]
