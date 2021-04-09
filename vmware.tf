@@ -37,6 +37,7 @@ data "vsphere_virtual_machine" "template" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+// VM CREATION WITH STATIC IPs
 
 resource "vsphere_virtual_machine" "vm_web" {
   name             = "terraform_web"
