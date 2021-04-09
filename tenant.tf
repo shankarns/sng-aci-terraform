@@ -1,5 +1,5 @@
 resource "aci_tenant" "tenant" {
-  name        = "aci_tenant_name"
+  name        = var.aci_tenant_name
   description = "This tenant is created by terraform"
 }
 
