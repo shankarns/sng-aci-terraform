@@ -8,17 +8,43 @@ resource "aci_vrf" "test-vrf" {
   name 		= "test-vrf"
 }
 
-resource "aci_bridge_domain" "dev_bd" {
+resource "aci_bridge_domain" "web_bd" {
   tenant_dn	= aci_tenant.tenant.id
-  name		= "dev_bd"
+  name		= "web_bd"
   relation_fv_rs_ctx = aci_vrf.test-vrf.id
 }
 
 
-resource "aci_subnet" "dev_subnet" {
-  parent_dn 	= aci_bridge_domain.dev_bd.id
-  ip 			= "10.10.0.1/16"
+resource "aci_subnet" "web_subnet" {
+  parent_dn 	= aci_bridge_domain.web_bd.id
+  ip 			= "10.10.1.1/24"
 }
+
+resource "aci_bridge_domain" "app_bd" {
+  tenant_dn = aci_tenant.tenant.id
+  name    = "app_bd"
+  relation_fv_rs_ctx = aci_vrf.test-vrf.id
+}
+
+
+resource "aci_subnet" "app_subnet" {
+  parent_dn   = aci_bridge_domain.app_bd.id
+  ip      = "10.10.2.1/24"
+}
+
+
+resource "aci_bridge_domain" "db_bd" {
+  tenant_dn = aci_tenant.tenant.id
+  name    = "db_bd"
+  relation_fv_rs_ctx = aci_vrf.test-vrf.id
+}
+
+
+resource "aci_subnet" "db_subnet" {
+  parent_dn   = aci_bridge_domain.app_bd.id
+  ip      = "10.10.3.1/16"
+}
+
 
 resource "aci_l3_outside" "internet" {
   tenant_dn = aci_tenant.tenant.id
