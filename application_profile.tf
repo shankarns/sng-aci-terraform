@@ -7,6 +7,7 @@ resource "aci_application_profile" "test-app" {
 resource "aci_application_epg" "WEB_EPG" {
   application_profile_dn = aci_application_profile.test-app.id
   name			 = "WEB_EPG"
+  relation_fv_rs_bd = aci_bridge_domain.dev_db.id
 }
 
 
