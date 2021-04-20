@@ -1,3 +1,6 @@
+//by Miguel Barajas - Gnuowned
+
+
 
 data "vsphere_datacenter" "dc" {
   name = var.vsphere_datacenter
@@ -20,16 +23,19 @@ data "vsphere_resource_pool" "pool" {
 data "vsphere_network" "network_web" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
+  depends_on = [aci_application_epg.WEB_EPG]
 }
 
 data "vsphere_network" "network_app" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.APP_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
+  depends_on = [aci_application_epg.APP_EPG]
 }
 
 data "vsphere_network" "network_db" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.DB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
+  depends_on = [aci_application_epg.DB_EPG]
 }
 
 data "vsphere_virtual_machine" "template" {
