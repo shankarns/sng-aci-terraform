@@ -20,7 +20,7 @@ data "vsphere_resource_pool" "pool" {
 
 resource "time_sleep" "wait_30_seconds" {
   depends_on = [aci_application_epg.WEB_EPG,aci_application_epg.APP_EPG,aci_application_epg.DB_EPG]
-  create_duration = "30s"
+  create_duration = "31s"
 }
 
 //we concatenate the tenant, app profile and epg to get the portgroup name
