@@ -1,3 +1,6 @@
+//by Miguel Barajas - Gnuowned
+
+
 
 data "vsphere_datacenter" "dc" {
   name = var.vsphere_datacenter
@@ -13,23 +16,31 @@ data "vsphere_resource_pool" "pool" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+// Let's wait 30 second for the EPG and Portgroups to be created
 
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [aci_application_epg.WEB_EPG,aci_application_epg.APP_EPG,aci_application_epg.DB_EPG]
+  create_duration = "30s"
+}
 
 //we concatenate the tenant, app profile and epg to get the portgroup name
 
 data "vsphere_network" "network_web" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.WEB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
+  depends_on = [time_sleep.wait_30_seconds]
 }
 
 data "vsphere_network" "network_app" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.APP_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
+  depends_on = [time_sleep.wait_30_seconds]
 }
 
 data "vsphere_network" "network_db" {
   name          = "${aci_tenant.tenant.name}|${aci_application_profile.test-app.name}|${aci_application_epg.DB_EPG.name}"
   datacenter_id = data.vsphere_datacenter.dc.id
+  depends_on = [time_sleep.wait_30_seconds]
 }
 
 data "vsphere_virtual_machine" "template" {
