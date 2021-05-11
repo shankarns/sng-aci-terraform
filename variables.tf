@@ -107,3 +107,7 @@ variable "db_tier_count" {
   description = "how many VM are deployed in Web Tier"
   default = 0
 }
+variable "vsphere_compute_cluster" {
+  type = string
+  description = "Vsphere compute cluster name"
+}
