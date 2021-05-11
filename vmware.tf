@@ -6,6 +6,11 @@ data "vsphere_datacenter" "dc" {
   name = var.vsphere_datacenter
 }
 
+data "vsphere_compute_cluster" "cluster" {
+  name          = var.vsphere_compute_cluster
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
 data "vsphere_datastore" "datastore" {
   name          = var.vsphere_datastore
   datacenter_id = data.vsphere_datacenter.dc.id
@@ -53,7 +58,7 @@ data "vsphere_virtual_machine" "template" {
 resource "vsphere_virtual_machine" "vm_web" {
   count = var.web_tier_count
   name             = "${var.aci_tenant_name}_terraform_web_${count.index}"
-  resource_pool_id = data.vsphere_resource_pool.pool.id
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   depends_on = [aci_application_epg.WEB_EPG]
 
