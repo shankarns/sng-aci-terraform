@@ -22,10 +22,12 @@ data "vsphere_resource_pool" "pool" {
 }
 
 // Let's wait 30 second for the EPG and Portgroups to be created
+resource "null_resource" "previous" {}
 
 resource "time_sleep" "wait_30_seconds" {
-  depends_on = [aci_application_epg.WEB_EPG,aci_application_epg.APP_EPG,aci_application_epg.DB_EPG]
-  create_duration = "31s"
+//  depends_on = [aci_application_epg.WEB_EPG,aci_application_epg.APP_EPG,aci_application_epg.DB_EPG]
+  depends_on = [null_resource.previous]
+  create_duration = "30s"
 }
 
 //we concatenate the tenant, app profile and epg to get the portgroup name
@@ -74,7 +76,7 @@ resource "vsphere_virtual_machine" "vm_web" {
     
   disk {
     label = "disk0"
-    size  = var.vsphere_vm_disksize #20
+    size  = var.vsphere_vm_disksize #30
   }
 
   clone {
@@ -118,7 +120,7 @@ resource "vsphere_virtual_machine" "vm_app" {
     
   disk {
     label = "disk0"
-    size  = var.vsphere_vm_disksize #20
+    size  = var.vsphere_vm_disksize #30
   }
 
   clone {
@@ -162,7 +164,7 @@ resource "vsphere_virtual_machine" "vm_db" {
     
   disk {
     label = "disk0"
-    size  = var.vsphere_vm_disksize #20
+    size  = var.vsphere_vm_disksize #30
   }
 
   clone {
