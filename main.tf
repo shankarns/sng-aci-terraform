@@ -6,7 +6,7 @@ terraform {
       version = "1.24.3"
     }
     aci = {
-      source = "CiscoDevNet/terraform-provider-aci"
+      source = "providers/CiscoDevNet/aci"
       //version = ">= 0.13"
     }
   
