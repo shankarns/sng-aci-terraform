@@ -109,7 +109,7 @@ resource "aci_epg_to_contract" "app_to_db_provider" {
 }
 
 # web_to_internet contract association with APP
-
+/*
 resource "aci_epg_to_contract" "web_to_internet_consumer" {
   application_epg_dn = aci_external_network_instance_profile.dev_ext_net_prof.id
   contract_dn        = aci_contract.web_to_internet.id
@@ -121,3 +121,5 @@ resource "aci_epg_to_contract" "web_to_internet_provider" {
   contract_dn        = aci_contract.web_to_internet.id
   contract_type      = "provider"
 }
+*/
+
